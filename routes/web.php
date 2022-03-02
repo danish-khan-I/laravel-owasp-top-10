@@ -47,11 +47,15 @@ Route::get('about', function () {
     return view('about');
 });
 
-Route::prefix('admin')->group(function(){
-    Route::get('/', function(){
+Route::get('login', function () {
+    return view('login');
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('/', function () {
         return view('admin.login');
     });
-    Route::get('/login', function(){
+    Route::get('/login', function () {
         return view('admin.login');
     });
 });
