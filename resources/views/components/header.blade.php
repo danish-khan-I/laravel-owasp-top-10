@@ -64,9 +64,15 @@
                          <li class="menu-item menu-item-has-children">
                              <a href="{{url('/contact')}}">Contact</a>
                          </li>
+                         @guest
                          <li class="menu-item ">
-                             <a href="{{url('/login')}}">Login</a>
+                            <a href="{{url('/login')}}">Login</a>
+                        </li>
+                         @else
+                         <li class="menu-item ">
+                             <a href="{{url('/logout')}}">Logout</a>
                          </li>
+                         @endguest
                          
                      </ul>
                  </nav><!-- /#main-nav -->

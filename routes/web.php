@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,15 +49,22 @@ Route::get('about', function () {
     return view('about');
 });
 
-Route::get('login', function () {
-    return view('login');
-});
+Route::get('login', AuthController::class . '@showPage')->name('login');
+Route::post('login', AuthController::class . '@login');
+Route::get('logout', AuthController::class . '@logout');
+Route::get('/profile', function () {
 
+    if (auth()->check()) {
+        return redirect()->route('profile', auth()->id());
+    } else {
+        abort(404);
+    }
+});
+Route::get('/profile/{id}', AuthController::class . '@profile')->name('profile')->middleware('auth');
+Route::post('/profile', AuthController::class . '@profileUpdate');
 Route::prefix('admin')->group(function () {
-    Route::get('/', function () {
-        return view('admin.login');
-    });
-    Route::get('/login', function () {
-        return view('admin.login');
-    });
+    Route::get('/', AdminController::class . '@dashboard');
+    Route::get('/login', AdminController::class . '@showPage');
+    Route::post('/login', AdminController::class . '@login')->name('admin.login');
+    Route::get('/dashboard', AdminController::class . '@dashboard');
 });
