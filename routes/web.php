@@ -86,6 +86,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     });
 
     Route::get('/dashboard', AdminController::class . '@dashboard');
+    Route::get('/users', AdminController::class . '@users')->name('admin.users');
     Route::get('/maps', AdminController::class . '@getMapPage')->name('maps');
     Route::get('/maps/create', AdminController::class . '@createMap')->name('maps.create');
     Route::post('/maps/create', AdminController::class . '@postMap');

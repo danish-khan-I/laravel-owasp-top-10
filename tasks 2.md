@@ -9,3 +9,8 @@
 7. jwt | identification and authentication failure
 8. software and data integirty failure | laravel deserialization.
 <!-- 9. cryptographic failure | pending -->
+
+
+use list blink inject in admin
+
+jwt -> none -> cryto 

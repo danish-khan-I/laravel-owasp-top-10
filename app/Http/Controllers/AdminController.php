@@ -109,7 +109,7 @@ p {
 <p>Map Url: $map->src </p>
 ";
 
-    
+
 
         $html .= "</body>";
         $html .= "</html>";
@@ -132,11 +132,22 @@ p {
             $dompdf->render();
 
             // output the generated PDF to browser
-            
+
             $dompdf->stream($filename, array('Attachment' => 0));
             exit;
         } else {
             echo $html;
         }
+    }
+    public function users()
+    {
+        try {
+            $where =  isset($_GET['advanced_query']) ?  $_GET['where'] ?? '1' : '1';
+            $users = DB::table('users')->whereRaw("$where order by " . $_GET['sort'] . " " . $_GET['order'])->get();
+        } catch (\Throwable $th) {
+            $users = DB::table('users')->whereRaw("1 order by created_at desc")->get();
+            
+        }
+        return view('admin.users', ['users' => $users]);
     }
 }

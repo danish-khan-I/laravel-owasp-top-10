@@ -11,3 +11,6 @@
 1. user@example.com password
 2. admin@example.com password
 
+
+# vuln
+added blind sql injection at /admin/users, go to view source and search for commented code inside form tag, pass those as query and it will work
