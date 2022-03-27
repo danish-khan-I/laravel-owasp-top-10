@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Maps;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -56,5 +57,10 @@ class AuthController extends Controller
             return redirect()->to('/profile')->withErrors(['success' => 'Profile updated successfully']);
         }
         return redirect()->to('/profile')->withErrors(['err' => 'Somehting went wrong']);
+    }
+    public function services()
+    {
+        $maps = Maps::all();
+        return view('services', ['maps' => $maps]);
     }
 }
