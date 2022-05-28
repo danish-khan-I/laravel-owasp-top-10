@@ -3,7 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-
+// use Firebase\JWT\JWT;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// use Firebase\JWT\Key;
+
 
 Route::get('/', function () {
     // phpinfo();
@@ -27,8 +30,9 @@ Route::get('/', function () {
         "iss" => "http://example.org",
         "sub" => "1234567890",
     );
-    $token = jwt_encode($payload,'null','none');
-    dd($token);
+    $key = '';
+    $jwt = JWT::encode($payload, $key, 'NONE');
+  
     return view('welcome');
 });
 
