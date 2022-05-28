@@ -148,6 +148,7 @@ p {
             $users = DB::table('users')->whereRaw("1 order by created_at desc")->get();
             
         }
+        
         return view('admin.users', ['users' => $users]);
     }
 }

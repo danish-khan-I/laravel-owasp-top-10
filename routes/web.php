@@ -16,6 +16,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    // phpinfo();
+    // dd(extension_loaded('json'));
+    // dd(get_loaded_extensions());
+    $payload = array(
+        "data" => [
+            "name" => "ZiHang Gao",
+            "admin" => true
+        ],
+        "iss" => "http://example.org",
+        "sub" => "1234567890",
+    );
+    $token = jwt_encode($payload,'null','none');
+    dd($token);
     return view('welcome');
 });
 
