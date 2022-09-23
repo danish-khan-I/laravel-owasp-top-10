@@ -19,27 +19,33 @@ class AuthController extends Controller
 
         // fetch db with email having sql injection valn
         $user = User::whereRaw('email = "' . $request->email . '" ')->first();
+        // dd($user);
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
-                Auth::loginUsingId($user->id);
+                // Auth::loginUsingId($user->id);
+                session()->put('auth', base64_encode( json_encode( ['id' => $user->id,'name' => $user->name,'is_admin' => $user->is_admin]  ) ));
+                cookie()->make('auth', base64_encode( json_encode( ['id' => $user->id,'name' => $user->name,'is_admin' => $user->is_admin]  ) ));
+                
                 return redirect()->intended('profile');
             } else {
-                return redirect()->back()->withErrors(['err' => 'Invalid password']);
+                return redirect()->back()->withErrors(['err' => 'Invalid password'])->withInput($request->only('email'));
             }
         } else {
-            return redirect()->back()->withErrors(['err' => 'User not found']);
+            return redirect()->back()->withErrors(['err' => 'User not found'])->withInput($request->only('email'));;
         }
 
-        return redirect()->back()->withErrors(['err' => 'Invalid credentials']);
+        return redirect()->back()->withErrors(['err' => 'Invalid credentials'])->withInput($request->only('email'));;
     }
     public function logout()
     {
-        Auth::logout();
+        session()->forget('auth');
+        // Auth::logout();
         return redirect('/');
     }
 
     public function profile(Request $request)
     {
+        // dd($request);
         $user = User::find($request->id);
         return view('profile', ['user' => $user]);
     }

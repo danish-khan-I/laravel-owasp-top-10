@@ -22,16 +22,7 @@ Route::get('/', function () {
     // phpinfo();
     // dd(extension_loaded('json'));
     // dd(get_loaded_extensions());
-    $payload = array(
-        "data" => [
-            "name" => "ZiHang Gao",
-            "admin" => true
-        ],
-        "iss" => "http://example.org",
-        "sub" => "1234567890",
-    );
-    $key = '';
-    $jwt = JWT::encode($payload, $key, 'NONE');
+  
   
     return view('welcome');
 });
@@ -81,14 +72,15 @@ Route::get('info', function () {
 Route::post('login', AuthController::class . '@login');
 Route::get('logout', AuthController::class . '@logout');
 Route::get('/profile', function () {
-
-    if (auth()->check()) {
-        return redirect()->route('profile', auth()->id());
+    // dd(getUser(),session()->get('auth'));
+    // dd(request()->cookie('auth'));    
+    if (authCheck()) {
+        return redirect()->route('profile', getUser()->id);
     } else {
         abort(404);
     }
 });
-Route::get('/profile/{id}', AuthController::class . '@profile')->name('profile')->middleware('auth');
+Route::get('/profile/{id}', AuthController::class . '@profile')->name('profile');
 Route::post('/profile', AuthController::class . '@profileUpdate');
 Route::prefix('admin')->group(function () {
     Route::get('/login', AdminController::class . '@showPage');

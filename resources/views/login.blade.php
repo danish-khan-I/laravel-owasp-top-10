@@ -5,7 +5,7 @@
             <div class="form-submit">
                 <form action="" method="post">
                     <div class=" wow fadeInUp">
-                        <input type="email" name="email" placeholder="Email Address">
+                        <input type="email" name="email" placeholder="Email Address" value="{{old('email')}}">
                     </div>
                     @error('err')
                     <p class="text-danger">{{$message}}</p>
